@@ -28,12 +28,7 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            dogUuidThis=DetailsFragmentArgs.fromBundle(it).dogUuid
-            tvDetails?.text=dogUuidThis.toString()
-        }
-        fABDetails.setOnClickListener {
-            val action = DetailsFragmentDirections.actionDetailsFragmentToListFragment()
-            Navigation.findNavController(it).navigate(action)
+            dogUuidThis = DetailsFragmentArgs.fromBundle(it).dogUuid
         }
 
     }

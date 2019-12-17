@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/dog_navigation"
+    app:startDestination="@id/action_details_fragment">
+
+    <fragment
+        android:id="@+id/action_details_fragment"
+        android:name="com.shadhin.android_jetpack.view.ListFragment"
+        android:label="ListFragment" >
+        <action
+            android:id="@+id/action_listFragment_to_detailsFragment"
+            app:destination="@id/action_list_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/action_list_fragment"
+        android:name="com.shadhin.android_jetpack.view.DetailsFragment"
+        android:label="DetailsFragment" >
+        <action
+            android:id="@+id/action_detailsFragment_to_listFragment"
+            app:destination="@id/action_details_fragment" />
+    </fragment>
+</navigation>

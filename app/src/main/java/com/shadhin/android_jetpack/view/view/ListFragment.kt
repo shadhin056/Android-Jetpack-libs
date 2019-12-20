@@ -37,6 +37,14 @@ class ListFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter
         }
+
+        srlRefreshLayout.setOnRefreshListener {
+            rvDogList.visibility=View.GONE
+            tvError.visibility=View.GONE
+            pBLoading.visibility=View.VISIBLE
+            viewModel.refresh()
+            srlRefreshLayout.isRefreshing=false
+        }
         obserViewModel()
     }
 

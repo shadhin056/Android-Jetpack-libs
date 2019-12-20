@@ -1,4 +1,4 @@
-package com.shadhin.android_jetpack.view
+package com.shadhin.android_jetpack.view.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

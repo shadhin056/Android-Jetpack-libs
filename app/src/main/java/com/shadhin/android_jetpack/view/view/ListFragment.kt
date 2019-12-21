@@ -39,11 +39,11 @@ class ListFragment : Fragment() {
         }
 
         srlRefreshLayout.setOnRefreshListener {
-            rvDogList.visibility=View.GONE
-            tvError.visibility=View.GONE
-            pBLoading.visibility=View.VISIBLE
-            viewModel.refresh()
-            srlRefreshLayout.isRefreshing=false
+            rvDogList.visibility = View.GONE
+            tvError.visibility = View.GONE
+            pBLoading.visibility = View.VISIBLE
+            viewModel.refreshBypassCacheDB()
+            srlRefreshLayout.isRefreshing = false
         }
         obserViewModel()
     }

@@ -26,10 +26,14 @@ class DogsListAdapter(val doglist: ArrayList<DogModel>) :
         holder.view.name.text = doglist[position].dogBreed
         holder.view.lifeSpan.text = doglist[position].lifeSpan
         holder.view.setOnClickListener {
-            Navigation.findNavController(it)
-                .navigate(ListFragmentDirections.actionListFragmentToDetailsFragment())
+            val action = ListFragmentDirections.actionListFragmentToDetailsFragment()
+            action.dogUuid = doglist[position].uuid
+            Navigation.findNavController(it).navigate(action)
         }
-        holder.view.imageview.loadImage(doglist[position].imageUrl, getProgressDrawable(holder.view.imageview.context))
+        holder.view.imageview.loadImage(
+            doglist[position].imageUrl,
+            getProgressDrawable(holder.view.imageview.context)
+        )
     }
 
     fun updateDogList(newDogsList: List<DogModel>) {

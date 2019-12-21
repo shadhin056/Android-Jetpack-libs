@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
 
 import com.shadhin.android_jetpack.R
+import com.shadhin.android_jetpack.view.util.getProgressDrawable
+import com.shadhin.android_jetpack.view.util.loadImage
 import com.shadhin.android_jetpack.view.view_model.DetailsViewModel
 import kotlinx.android.synthetic.main.fragment_details.*
 
@@ -31,12 +33,13 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
-        viewModel.fetch()
+
         arguments?.let {
             dogUuidThis = DetailsFragmentArgs.fromBundle(
                 it
             ).dogUuid
         }
+        viewModel.fetch(dogUuidThis);
         observeViewModel()
 
     }
@@ -48,6 +51,9 @@ class DetailsFragment : Fragment() {
                 txtDogPurpose.text = dogs.bredFor
                 txtDogTemperament.text = dogs.temperament
                 txtDogLifeSpan.text = dogs.lifeSpan
+                context?.let {
+                    (ivDogImage.loadImage(dogs.imageUrl, getProgressDrawable(it)))
+                }
             }
         })
     }

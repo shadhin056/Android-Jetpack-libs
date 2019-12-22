@@ -2,7 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
+    
+    <data>
+        <variable
+            name="dog"
+            type="com.shadhin.android_jetpack.view.model.DogModel" />
+    </data>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +20,8 @@
             android:layout_alignParentTop="true"
             android:minHeight="200dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_details" />
+             android:imageUrl="@{dog.imageUrl}"
+              />
 
         <TextView
             android:id="@+id/txtDogName"
@@ -25,7 +31,7 @@
             android:layout_below="@+id/ivDogImage"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"
-            android:text="Dog Name" />
+            android:text="@{dog.dogBreed}" />
 
         <TextView
             android:id="@+id/txtDogPurpose"
@@ -35,7 +41,7 @@
             android:layout_below="@+id/txtDogName"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"
-            android:text="Dog Purpose" />
+            android:text="@{dog.bredFor}" />
 
         <TextView
             android:id="@+id/txtDogTemperament"
@@ -45,7 +51,7 @@
             android:layout_below="@+id/txtDogPurpose"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"
-            android:text="Dog Temperament" />
+            android:text="@{dog.temperament}" />
 
         <TextView
             android:id="@+id/txtDogLifeSpan"
@@ -55,7 +61,7 @@
             android:layout_below="@+id/txtDogTemperament"
             android:layout_centerHorizontal="true"
             android:layout_margin="4dp"
-            android:text="Dog LifeSpan" />
+            android:text="@{dog.lifeSpan}" />
 
 
     </RelativeLayout>

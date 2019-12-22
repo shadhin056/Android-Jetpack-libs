@@ -1,6 +1,8 @@
 package com.shadhin.android_jetpack.view.view
 
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,10 +12,16 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import androidx.palette.graphics.Palette
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.BitmapImageViewTarget
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 
 import com.shadhin.android_jetpack.R
 import com.shadhin.android_jetpack.databinding.FragmentDetailsBinding
 import com.shadhin.android_jetpack.databinding.RowItemDogBinding
+import com.shadhin.android_jetpack.view.model.DogPalette
 import com.shadhin.android_jetpack.view.util.getProgressDrawable
 import com.shadhin.android_jetpack.view.util.loadImage
 import com.shadhin.android_jetpack.view.view_model.DetailsViewModel
@@ -56,6 +64,9 @@ class DetailsFragment : Fragment() {
         viewModel.dogLiveData.observe(this, Observer { dogs ->
             dogs?.let {
               dataBinding.dog=dogs
+                it.imageUrl?.let{
+                    setUpBackgroundColor(it)
+                }
                 /*  txtDogName.text = dogs.dogBreed
                 txtDogPurpose.text = dogs.bredFor
                 txtDogTemperament.text = dogs.temperament
@@ -66,6 +77,26 @@ class DetailsFragment : Fragment() {
             }
         })
     }
+    private fun setUpBackgroundColor(url:String){
+        Glide.with(this)
+            .asBitmap()
+            .load(url)
+            .into(object :CustomTarget<Bitmap>(){
+                override fun onLoadCleared(placeholder: Drawable?) {
 
+                }
+
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    Palette.from(resource)
+                        .generate {
+                            palette ->
+                            val intColor=palette?.vibrantSwatch?.rgb ?:0
+                            val myPalatte=DogPalette(intColor)
+                            dataBinding.palette=myPalatte
+                        }
+                }
+
+            })
+    }
 
 }

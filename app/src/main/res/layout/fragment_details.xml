@@ -7,8 +7,12 @@
         <variable
             name="dog"
             type="com.shadhin.android_jetpack.view.model.DogModel" />
+        <variable
+            name="palette"
+            type="com.shadhin.android_jetpack.view.model.DogPalette" />
     </data>
     <RelativeLayout
+        android:background="@{palette.color}"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".view.view.DetailsFragment">

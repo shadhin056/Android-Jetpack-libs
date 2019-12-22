@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.shadhin.android_jetpack.view.model.DogApiService
 import com.shadhin.android_jetpack.view.model.DogDatabase
 import com.shadhin.android_jetpack.view.model.DogModel
+import com.shadhin.android_jetpack.view.util.NotificationHelper
 import com.shadhin.android_jetpack.view.util.SharedPreferencesHelper
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -65,7 +66,7 @@ class ListViewModel(application: Application) : BaseViewModel(application) {
                     override fun onSuccess(data: List<DogModel>) {
                         storeDogsLocally(data)
                         Toast.makeText(getApplication(), "From Remote", Toast.LENGTH_LONG).show()
-
+                        NotificationHelper(getApplication()).createNotification()
                     }
 
                     override fun onError(e: Throwable) {

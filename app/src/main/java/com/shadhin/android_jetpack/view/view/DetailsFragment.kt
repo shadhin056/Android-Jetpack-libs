@@ -123,7 +123,15 @@ class DetailsFragment : Fragment() {
                 (activity as MainActivity).checkSMSPermission()
             }
             R.id.action_share -> {
-
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Check out this dog breed")
+                intent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    "${currentDog?.dogBreed} bred for  ${currentDog?.bredFor}"
+                )
+                intent.putExtra(Intent.EXTRA_STREAM, currentDog?.imageUrl)
+                startActivity(Intent.createChooser(intent, "Share with"))
             }
         }
         return super.onOptionsItemSelected(item)

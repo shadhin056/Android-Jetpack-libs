@@ -1,6 +1,7 @@
 package com.shadhin.android_jetpack.view.view
 
 
+import android.app.AlertDialog
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -19,7 +20,10 @@ import com.bumptech.glide.request.transition.Transition
 import com.shadhin.android_jetpack.R
 import com.shadhin.android_jetpack.databinding.FragmentDetailsBinding
 import com.shadhin.android_jetpack.databinding.RowItemDogBinding
+import com.shadhin.android_jetpack.databinding.SendSmsDialogBinding
+import com.shadhin.android_jetpack.view.model.DogModel
 import com.shadhin.android_jetpack.view.model.DogPalette
+import com.shadhin.android_jetpack.view.model.SmsInfo
 import com.shadhin.android_jetpack.view.util.getProgressDrawable
 import com.shadhin.android_jetpack.view.util.loadImage
 import com.shadhin.android_jetpack.view.view_model.DetailsViewModel
@@ -33,6 +37,8 @@ class DetailsFragment : Fragment() {
     private var dogUuidThis = 0;
     private lateinit var dataBinding: FragmentDetailsBinding
     private var sendSmsStarted = false
+    private var currentDog: DogModel? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,6 +67,9 @@ class DetailsFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.dogLiveData.observe(this, Observer { dogs ->
+
+            currentDog = dogs
+
             dogs?.let {
                 dataBinding.dog = dogs
                 it.imageUrl?.let {
@@ -119,6 +128,36 @@ class DetailsFragment : Fragment() {
 
     fun onPermissionResult(permissionGranted: Boolean) {
 
+        if (sendSmsStarted && permissionGranted) {
+            context?.let {
+                val smsInfo = SmsInfo(
+                    "",
+                    "${currentDog?.dogBreed} bred for ${currentDog?.bredFor}",
+                    currentDog?.imageUrl
+                )
+                val dialogBinding = DataBindingUtil.inflate<SendSmsDialogBinding>(
+                    LayoutInflater.from(it),
+                    R.layout.send_sms_dialog,
+                    null,
+                    false
+                )
+                AlertDialog.Builder(it)
+                    .setView(dialogBinding.root)
+                    .setPositiveButton("Send SMS") { dialog, which ->
+                        if (!dialogBinding.smsDestination.text.isNullOrEmpty()) {
+                            smsInfo.to = dialogBinding.smsDestination.text.toString()
+                            sendSms(smsInfo)
+                        }
+                    }
+                    .setNegativeButton("Cancel") { dialog, which ->
+
+                    }.show()
+                    dialogBinding.smsinfo=smsInfo
+            }
+        }
     }
 
+    private fun sendSms(smsinfo: SmsInfo) {
+
+    }
 }
